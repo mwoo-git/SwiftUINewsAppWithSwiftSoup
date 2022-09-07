@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @StateObject var viewModel = HomeViewModel()
     @State private var selectedOption: Category = .tech
+    
     var body: some View {
         VStack {
             HStack(spacing: 16) {
@@ -39,7 +40,7 @@ struct HomeView: View {
             .foregroundColor(.black)
             
             // NewsOptionList
-            NewsOptionListView(selectedOption: $selectedOption)
+            NewsOptionListView(viewModel: viewModel, selectedOption: $selectedOption)
                 .padding([.top, .horizontal])
                 .overlay(
                     Divider()

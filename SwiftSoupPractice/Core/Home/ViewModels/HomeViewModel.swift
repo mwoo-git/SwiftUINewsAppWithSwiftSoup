@@ -11,20 +11,20 @@ import Combine
 class HomeViewModel: ObservableObject {
     @Published var news = [News]()
     //    @Published var isNewsLoading = false
+    @Published var selectedCategory: Category = Category.tech
     
     var cancellableTask: AnyCancellable? = nil
     
     var htmlScrapUtlity = HTMLScraperUtility()
     
     init() {
-        loadNews()
+        loadNews(for: selectedCategory)
     }
     
-    func loadNews() {
-        let urlString = "https://www.nytimes.com/section/science"
-        guard let url = URL(string: urlString) else { return }
+    func loadNews(for category: Category) {
+        guard let url = URL(string: category.url) else { return }
         var request = URLRequest(url: url)
-        request.setValue("Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/100.0.48496.75", forHTTPHeaderField: "User-Agent")
+        request.addValue("Mozilla/5.0", forHTTPHeaderField: "User-Agent")
         //        self.isNewsLoading = true
         self.cancellableTask?.cancel()
         self.cancellableTask = URLSession.shared.dataTaskPublisher(for: request)

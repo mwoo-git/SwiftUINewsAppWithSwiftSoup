@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct NewsOptionListView: View {
+    @StateObject var viewModel: HomeViewModel
     @Binding var selectedOption: Category
     @Namespace var animation
     
@@ -39,6 +40,7 @@ struct NewsOptionListView: View {
                                 self.selectedOption = item
                                 proxy.scrollTo(selectedOption, anchor: .center)
                             }
+                            viewModel.loadNews(for: item) // 카테고리를 선택하면 화면 로드
                         }
                     }
                 }
